@@ -1,16 +1,11 @@
 function first(input, step = 1) {
     input = input.split('').map(digit => +digit);
 
-    let subResult = input
-        .filter((digit, i) => input[(i + step) % input.length] === digit);
+    let result = 0;
+    // reduce can be used, but readability would be worse
+    input.forEach((digit, i) => result += input[(i + step) % input.length] === digit ? digit : 0);
 
-    if (subResult[subResult.length - 1] === subResult[0]) {
-        subResult.pop();
-    }
-
-    subResult.push(0);
-
-    return subResult.reduce((a, b) => a + b);
+    return result;
 }
 
 function second(input) {
