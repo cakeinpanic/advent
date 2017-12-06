@@ -1,3 +1,5 @@
+// http://adventofcode.com/2017/day/5
+
 function jumper(input, changeOffset) {
     input = [].concat(input);
     let currentPosition = 0;

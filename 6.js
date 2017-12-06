@@ -1,4 +1,4 @@
-let input = [14, 0, 15, 12, 11, 11, 3, 5, 1, 6, 8, 4, 9, 1, 8, 4];
+//http://adventofcode.com/2017/day/2
 
 function biggestIndex(input) {
     return input.indexOf(Math.max(...input));

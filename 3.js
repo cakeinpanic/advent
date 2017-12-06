@@ -1,3 +1,5 @@
+// http://adventofcode.com/2017/day/3
+
 function closestSquareBase(input) {
     let ceil = Math.pow(Math.ceil(input), 2);
     let floor = Math.pow(Math.floor(input), 2);

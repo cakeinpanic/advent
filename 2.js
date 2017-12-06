@@ -1,3 +1,5 @@
+// http://adventofcode.com/2017/day/2
+
 function second(input) {
     return input
         .map(line => Math.max(...line) - Math.min(...line))

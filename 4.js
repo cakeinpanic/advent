@@ -1,3 +1,5 @@
+// http://adventofcode.com/2017/day/3
+
 function splitAndSort(input, splitter = ' ') {
     return input.split(splitter).sort();
 }
