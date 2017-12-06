@@ -4,8 +4,12 @@ function biggestIndex(input) {
     return input.indexOf(Math.max(...input));
 }
 
+function copyArray(array) {
+    return [].concat(array);
+}
+
 function shiftArray(input, index) {
-    input = [].concat(input);
+    input = copyArray(input);
     while (index > 0) {
         index--;
         input.unshift(input.pop());
@@ -13,7 +17,6 @@ function shiftArray(input, index) {
     while (index < 0) {
         index++;
         input.push(input.shift());
-
     }
     return input;
 }
@@ -22,14 +25,14 @@ function haveSequenceInMemory(memory, input) {
     return memory.some(sequence => sequence.every((value, i) => value === input[i]));
 }
 
-function six(inititalInput) {
+function countSteps(inititalInput, countCyclomaticSteps = false) {
     let input = [].concat(inititalInput);
     let steps = 0;
     let memory = [];
 
     while (!haveSequenceInMemory(memory, input)) {
         steps++;
-        memory.push([].concat(input));
+        memory.push(copyArray(input));
 
         let currentBlockIndex = biggestIndex(input);
         input = shiftArray(input, -currentBlockIndex);
@@ -47,9 +50,23 @@ function six(inititalInput) {
         }
 
         input = shiftArray(input, currentBlockIndex);
-
     }
+
+    if (countCyclomaticSteps) {
+        return countSteps(input);
+    }
+
     return steps;
 }
 
+
+function six(input) {
+    return countSteps(input);
+}
+
+function sixExtended(input) {
+    return countSteps(input, true);
+}
+
 console.log(six(input));
+console.log(sixExtended(input));
