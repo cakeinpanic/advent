@@ -27,9 +27,9 @@ class Registry {
 
 function prepareSteps(input) {
     return input.map(step => {
-        let newStep = [step[0]];
-        newStep[1] = step[1] === 'dec' ? -step[2] : step[2];
-        newStep[2] = step[3].replace('if ', '');
+        let newStep = {letter: step[0]};
+        newStep.amount= step[1] === 'dec' ? -step[2] : step[2];
+        newStep.condition = step[3].replace('if ', '');
 
         return newStep;
     });
@@ -42,13 +42,12 @@ function eight(input, findAAbsoluteMaximum) {
     input = prepareSteps(input);
 
     input.forEach(step => {
-        let letter = step[0];
 
-        let conditionLetter = /\w+/.exec(step[2])[0];
+        let conditionLetter = /\w+/.exec(step.condition)[0];
         let conditionValue = registry.get(conditionLetter);
-        let condition = eval((step[2]).replace(/\w+/, conditionValue));
+        let condition = eval((step.condition).replace(/\w+/, conditionValue));
         if (condition) {
-            registry.add(letter, step[1]);
+            registry.add(step.letter, step.amount);
         }
 
     });
@@ -61,5 +60,9 @@ function eightExtended(input) {
     return eight(input, true);
 }
 
+let input = require('./data/8');
+
 console.log(eight(input));
 console.log(eightExtended(input));
+
+
