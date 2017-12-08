@@ -1000,21 +1000,25 @@ let input = [['b', 'inc', 580, 'if bkd > -1'],
     ['fw', 'dec', -971, 'if fz < 1922']];
 
 
-function prepareSteps(input){
+function prepareSteps(input) {
     return input.map(step => {
-        if (step[1] === 'dec') {
-            step[2] = -step[2];
-        }
-        step[3] = step[3].replace('if ', '');
-        step.splice(1, 1);
-        return step;
+        let newStep = [step[0]];
+        newStep[1] = step[1] === 'dec'? -step[2] : step[2];
+        newStep[2] = step[3].replace('if ', '');
+
+        return newStep;
     });
 }
 
-function eight(input) {
-    input = prepareSteps([].concat(input));
+function getMaxInRegistry(registry) {
+    return Math.max(...Object.keys(registry).map(key => registry[key]))
+}
+
+function eight(input, findAAbsoluteMaximum) {
+    input = prepareSteps(input);
 
     let registry = {};
+    let absoluteRegistryMax = 0;
 
     function getStepFromRegistry(letter) {
         if (!registry[letter]) {
@@ -1033,9 +1037,21 @@ function eight(input) {
         if (condition) {
             registry[letter] += step[1];
         }
+
+        if (findAAbsoluteMaximum) {
+            let currentMax = getMaxInRegistry(registry);
+            absoluteRegistryMax = (absoluteRegistryMax < currentMax) ? currentMax : absoluteRegistryMax;
+        }
     });
 
-    return Math.max(...Object.keys(registry).map(key=>registry[key]))
+    return findAAbsoluteMaximum ? absoluteRegistryMax : getMaxInRegistry(registry);
+
+}
+
+
+function eightExtended(input) {
+    return eight(input, true);
 }
 
 console.log(eight(input));
+console.log(eightExtended(input));
