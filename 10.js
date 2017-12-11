@@ -1,17 +1,5 @@
 let input = [63, 144, 180, 149, 1, 255, 167, 84, 125, 65, 188, 0, 2, 254, 229, 24];
-
-function shiftArray(input, index) {
-    input = [].concat(input);
-    while (index > 0) {
-        index--;
-        input.unshift(input.pop());
-    }
-    while (index < 0) {
-        index++;
-        input.push(input.shift());
-    }
-    return input;
-}
+let {shiftArray} = require('./utlis');
 
 function makeKnot(list, currentPosition, step) {
     list = shiftArray(list, -currentPosition);
