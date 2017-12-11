@@ -13,29 +13,36 @@ function shiftArray(input, index) {
     return input;
 }
 
+function makeKnot(list, currentPosition, step) {
+    list = shiftArray(list, -currentPosition);
 
-function ten(lengths, base = 256) {
-    let list = new Array(base).fill(1).map((el, i) => i);
+    let substr = list
+        .slice(0, step)
+        .reverse();
+
+    list.splice(0, step, ...substr);
+
+    return shiftArray(list, currentPosition);
+}
+
+function makeAllKnots(list, lengths) {
     let skipSize = 0;
     let currentPosition = 0;
 
     lengths.forEach(step => {
-
-        list = shiftArray(list, -currentPosition)
-
-        let substr = list
-            .slice(0, step)
-            .reverse();
-
-        list.splice(0, step, ...substr);
-        list = shiftArray(list, currentPosition);
-
+        list = makeKnot(list, currentPosition, step);
         currentPosition = (currentPosition + step + skipSize) % list.length;
-
         skipSize++;
     });
 
-    return list[0] * list[1];
+    return list;
+}
+
+function ten(lengths, base = 256) {
+    let list = new Array(base).fill(1).map((el, i) => i);
+    let result = makeAllKnots(list, lengths)
+
+    return result[0] * result[1];
 }
 
 console.log(ten(input));
