@@ -16,19 +16,22 @@ function replaceOpposite(sortedSteps, first, second, replace) {
     let secondCount = getCount(sortedSteps, second);
 
     let edited = !(firstCount === 0 || secondCount === 0);
-    let addCount = Math.min(firstCount, secondCount);
 
-    sortedSteps.splice(sortedSteps.indexOf(second), addCount);
-    sortedSteps.splice(sortedSteps.indexOf(first), addCount);
+    if (edited) {
+        let addCount = Math.min(firstCount, secondCount);
 
-    if (!!replace) {
-        sortedSteps = sortedSteps
-            .concat(new Array(addCount).fill(replace))
-            .sort();
+        sortedSteps.splice(sortedSteps.indexOf(second), addCount);
+        sortedSteps.splice(sortedSteps.indexOf(first), addCount);
+
+        if (!!replace) {
+            sortedSteps = sortedSteps
+                .concat(new Array(addCount).fill(replace))
+                .sort();
+        }
     }
 
     return {
-        sortedSteps: sortedSteps, edited
+        sortedSteps, edited
     };
 }
 
@@ -62,4 +65,11 @@ function eleven(steps) {
     return steps.length;
 }
 
+function elevenExtended(steps) {
+    let distances = steps.map((step, i) => eleven(steps.slice(0, i)));
+    return Math.max(...distances, eleven(steps));
+
+}
+
 console.log(eleven(input.split(',')));
+console.log(elevenExtended(input.split(',')));
