@@ -1,4 +1,3 @@
-
 function copyArray(array) {
     return [].concat(array);
 }
@@ -16,4 +15,9 @@ function shiftArray(input, index) {
     return input;
 }
 
-module.exports = {shiftArray, copyArray};
+function getFilledArray(length) {
+    return new Array(length)
+        .fill(0)
+}
+
+module.exports = {shiftArray, copyArray, getFilledArray};
