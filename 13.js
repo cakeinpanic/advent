@@ -64,4 +64,15 @@ function thirteen(input) {
 
 }
 
+function thirteenExtened(input) {
+    let delay = 0;
+    let severity = thirteen(input, delay, true);
+    while (severity > 0) {
+        severity = thirteen(input, ++delay, true);
+        console.log(severity, delay)
+    }
+    return delay;
+}
+
 console.log(thirteen(input))
+console.log(thirteenExtened(input))
