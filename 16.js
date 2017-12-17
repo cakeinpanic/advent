@@ -26,10 +26,8 @@ function prepareInput(input) {
 }
 
 
-function sixten(input) {
-    const steps = prepareInput(input);
-    const startCharCode = 'a'.charCodeAt(0);
-    let sequence = getFilledArray(16).map((el, i) => String.fromCharCode(i + startCharCode));
+function dance(sequence, steps) {
+    sequence = sequence.split('');
 
     function exchange(position1, position2) {
         let a = sequence[position2];
@@ -52,7 +50,32 @@ function sixten(input) {
     });
 
     return sequence.join('');
-
 }
 
-console.log(sixten(input));
+function sixteen(input) {
+    const steps = prepareInput(input);
+    const startCharCode = 'a'.charCodeAt(0);
+    let sequence = getFilledArray(16).map((el, i) => String.fromCharCode(i + startCharCode));
+
+    return dance(sequence, steps);
+}
+
+function sixteenExtended(input) {
+    const steps = prepareInput(input);
+    const startCharCode = 'a'.charCodeAt(0);
+    let sequence = getFilledArray(16).map((el, i) => String.fromCharCode(i + startCharCode)).join('');
+    const history = [];
+    const totalSteps = 1000000000;
+
+    for (let i = 0; i < totalSteps; i++) {
+        sequence = dance(sequence, steps);
+        if (history.indexOf(sequence) > -1) {
+            i = (~~(totalSteps / i)) * i;
+        }
+        history.push(sequence)
+    }
+
+    return sequence;
+}
+
+console.log(sixteenExtended(input));
