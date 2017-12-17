@@ -1,4 +1,4 @@
-let input = [63, 144, 180, 149, 1, 255, 167, 84, 125, 65, 188, 0, 2, 254, 229, 24];
+let input = [63, 144, 180, 149, 1, 255, 167, 84, 125, 65, 188, 0, 2, 254, 229, 24].join(',');
 
 let {shiftArray, getFilledArray} = require('./utlis');
 
@@ -35,7 +35,9 @@ function makeHash(list, base = 16) {
         .join('');
 }
 
+
 function ten(lengths, base = 256) {
+    lengths = lengths.split(',');
     let list = getFilledArray(base).map((el, i) => i);
     let result = makeAllKnots(list, lengths).list;
 
@@ -43,7 +45,7 @@ function ten(lengths, base = 256) {
 }
 
 
-function tenExtended(lengthsString, base = 256) {
+function makeKnotHash(lengthsString, base=256){
     let list = getFilledArray(base).map((el, i) => i);
 
     let additionalLengths = [17, 31, 73, 47, 23];
@@ -60,7 +62,10 @@ function tenExtended(lengthsString, base = 256) {
     });
 
     return makeHash(list);
-
 }
 
-console.log(tenExtended(input.join(',')));
+function tenExtended(lengthsString) {
+   return makeKnotHash(lengthsString, 256);
+}
+
+module.exports = {makeKnotHash};
