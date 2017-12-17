@@ -20,4 +20,8 @@ function getFilledArray(length) {
         .fill(0)
 }
 
-module.exports = {shiftArray, copyArray, getFilledArray};
+function getTableElement(y, x) {
+    return this.table[y] && this.table[y][x] || 0;
+}
+
+module.exports = {shiftArray, copyArray, getFilledArray, getTableElement};

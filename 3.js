@@ -1,5 +1,7 @@
 // http://adventofcode.com/2017/day/3
 
+const {getTableElement} = require('./utlis');
+
 function closestSquareBase(input) {
     let ceil = Math.pow(Math.ceil(input), 2);
     let floor = Math.pow(Math.floor(input), 2);
@@ -44,6 +46,7 @@ function thirdExtended(input) {
     let res = [];
     let n = Math.ceil(Math.pow(input, 1 / 4));
     let center = Math.ceil(n / 2);
+    const getElement = getTableElement.bind({table: res})
 
     for (let k = 1; k < n * n + 1; k++) {
         let steps = getSteps(k);
@@ -69,11 +72,8 @@ function thirdExtended(input) {
         }
     }
 
-    function getElement(y, x) {
-        return res[y] && res[y][x] || 0;
-    }
+
 }
 
 console.log(third(347991))
 console.log(thirdExtended(347991))
-console.log(thirdExtended(1000))

@@ -1,5 +1,5 @@
 const {makeKnotHash} = require('./10');
-const {getFilledArray} = require('./utlis');
+const {getFilledArray, getTableElement} = require('./utlis');
 
 
 const input = 'ffayrhll';
@@ -30,13 +30,9 @@ function fourteenExtended(input, base = 128) {
     let table = getFilledArray(base).map((el, i) => `${input}-${i}`)
                                     .map(string => getLine(string).split(''));
 
-    // todo move to utils and use in day 3
-    function getElement(y, x) {
-        return table[y] && table[y][x] || 0;
-    }
 
     function findNeighbours(y, x) {
-        if (getElement(y, x) == 1) {
+        if (getTableElement.call({table},y, x) == 1) {
             table[y][x] = 0;
             findNeighbours(y - 1, x);
             findNeighbours(y + 1, x);
