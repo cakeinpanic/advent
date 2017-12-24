@@ -1,24 +1,8 @@
 //http://adventofcode.com/2017/day/2
+let {shiftArray, copyArray} = require('./utlis');
 
 function biggestIndex(input) {
     return input.indexOf(Math.max(...input));
-}
-
-function copyArray(array) {
-    return [].concat(array);
-}
-
-function shiftArray(input, index) {
-    input = copyArray(input);
-    while (index > 0) {
-        index--;
-        input.unshift(input.pop());
-    }
-    while (index < 0) {
-        index++;
-        input.push(input.shift());
-    }
-    return input;
 }
 
 function haveSequenceInMemory(memory, input) {
