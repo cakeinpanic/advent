@@ -18,6 +18,23 @@ function getOppositeDirection(direction) {
 }
 
 
+function turnRight(direction) {
+    switch (direction) {
+        case LEFT:
+            return UP;
+        case RIGHT:
+            return DOWN;
+        case UP:
+            return RIGHT;
+        case DOWN:
+            return LEFT;
+    }
+}
+
+function turnLeft(direction) {
+    return turnRight(getOppositeDirection(direction));
+}
+
 function copyArray(array) {
     return [].concat(array);
 }
@@ -50,27 +67,34 @@ function getTableElement(y, x) {
     return this.table[y] && this.table[y][x] || 0;
 }
 
-function getNextTableElement(table, x, y, direction) {
-    if (direction === DOWN) {
-        y++;
-    }
-    if (direction === UP) {
-        y--;
-    }
-    if (direction === LEFT) {
-        x--;
-    }
-    if (direction === RIGHT) {
-        x++;
-    }
-
+function getNextTableElement(table, oldX, oldY, direction) {
+    const {x, y} = getNextElementCoordinates(oldX, oldY, direction);
     return getTableElement.call({table}, y, x);
 }
+
+function getNextElementCoordinates(x, y, direction) {
+    if (direction === DOWN) {
+        return {x, y: ++y};
+    }
+    if (direction === UP) {
+        return {x, y: --y};
+    }
+    if (direction === LEFT) {
+        return {x: --x, y};
+    }
+    if (direction === RIGHT) {
+        return {x: ++x, y};
+    }
+
+}
+
 module.exports = {
     shiftArray, removeFromArray,
     getNextTableElement,
     copyArray, getFilledArray,
     getTableElement,
+    turnLeft, turnRight,
+    getNextElementCoordinates,
     getOppositeDirection,
     DOWN, UP, RIGHT, LEFT
 };
