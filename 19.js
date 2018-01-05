@@ -1,44 +1,8 @@
 let input = require('./data/19');
-let {getTableElement} = require('./utlis');
+let {getNextTableElement, removeFromArray, getOppositeDirection, DOWN, UP, LEFT, RIGHT} = require('./utlis');
 
 function prepareInput(input) {
     return input.split('\n').map(t => t.split('').map((t) => t === ' ' ? '' : t));
-}
-
-const DOWN = 'down';
-const UP = 'up';
-const LEFT = 'left';
-const RIGHT = 'right';
-
-function getOppositeDirection(direction) {
-    switch (direction) {
-        case LEFT:
-            return RIGHT;
-        case RIGHT:
-            return LEFT;
-        case UP:
-            return DOWN;
-        case DOWN:
-            return UP;
-    }
-}
-
-
-function getNext(table, x, y, direction) {
-    if (direction === DOWN) {
-        y++;
-    }
-    if (direction === UP) {
-        y--;
-    }
-    if (direction === LEFT) {
-        x--;
-    }
-    if (direction === RIGHT) {
-        x++;
-    }
-
-    return getTableElement.call({table}, y, x);
 }
 
 class Cell {
@@ -65,7 +29,7 @@ class Cell {
         }
 
         this.directions = availableDirections
-            .filter(direction => getNext(symbols, this.x, this.y, direction));
+            .filter(direction => getNextTableElement(symbols, this.x, this.y, direction));
 
     }
 }
@@ -113,20 +77,20 @@ class Maze {
     }
 
     makeMove() {
-        let newCell = getNext(this.cells, this.currentCell.x, this.currentCell.y, this.direction);
+        let newCell = getNextTableElement(this.cells, this.currentCell.x, this.currentCell.y, this.direction);
 
         if (this.currentCell.value === '+' || !newCell || !newCell.value) {
             const available = this.currentCell.directions;
 
-            remove(available, this.direction);
-            remove(available, getOppositeDirection(this.direction));
+            removeFromArray(available, this.direction);
+            removeFromArray(available, getOppositeDirection(this.direction));
 
             this.direction = available[0];
 
             if (!this.direction) {
                 this.canGoFurther = false;
             } else {
-                newCell = getNext(this.cells, this.currentCell.x, this.currentCell.y, this.direction);
+                newCell = getNextTableElement(this.cells, this.currentCell.x, this.currentCell.y, this.direction);
             }
         }
 
@@ -139,10 +103,6 @@ class Maze {
     }
 }
 
-function remove(arr, el) {
-    let index = arr.indexOf(el);
-    if (index > -1) arr.splice(index, 1)
-}
 
 
 function nineteen(input) {
