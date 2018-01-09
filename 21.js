@@ -109,13 +109,13 @@ class Map {
 }
 
 
-function twentyOne(input) {
+function twentyOne(input, steps =5) {
     const patterns = preparePatterns(input);
     const startGrid = `.#...####`;
 
     const maze = new Map(startGrid, patterns);
     let i = 0;
-    while (i++ < 5) {
+    while (i++ < steps) {
         maze.splitOnSubMaps();
 
     }
@@ -123,4 +123,9 @@ function twentyOne(input) {
     return maze.mapAsLine.replace(/\./g, '').length;
 }
 
+function twentyOneExtended(input) {
+   return twentyOne(input, 18)
+}
+
 console.log(twentyOne(input));
+console.log(twentyOneExtended(input));
