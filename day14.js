@@ -1,4 +1,4 @@
-const {makeKnotHash} = require('./10');
+const {makeKnotHash} = require('./day10');
 const {getFilledArray, getTableElement} = require('./utlis');
 
 

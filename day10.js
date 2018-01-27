@@ -1,46 +1,3 @@
-<<<<<<< HEAD
-let input = [63,144,180,149,1,255,167,84,125,65,188,0,2,254,229,24];
-
-function shiftArray(input, index) {
-  input = [].concat(input);
-  while (index > 0) {
-      index--;
-      input.unshift(input.pop());
-  }
-  while (index < 0) {
-      index++;
-      input.push(input.shift());
-  }
-  return input;
-}
-
-
-function ten(lengths, base = 256) {
-  let list = new Array(base).fill(1).map((el, i) => i);
-  let skipSize = 0;
-  let currentPosition = 0;
-  
-  lengths.forEach(step => {
-  
-    list = shiftArray(list, -currentPosition)
-    
-    let substr = list
-    .slice(0, step )
-    .reverse();
-    
-    list.splice(0, step, ...substr);
-    list = shiftArray(list, currentPosition);
-
-    currentPosition = (currentPosition + step + skipSize) % list.length;
-  
-    skipSize++;
-  });
-
-  return list[0]*list[1];
-}
-
-console.log(ten(input));
-=======
 let input = [63, 144, 180, 149, 1, 255, 167, 84, 125, 65, 188, 0, 2, 254, 229, 24].join(',');
 
 let {shiftArray, getFilledArray} = require('./utlis');
@@ -87,8 +44,11 @@ function ten(lengths, base = 256) {
     return result[0] * result[1];
 }
 
+function tenExtended(lengthsString) {
+    return makeKnotHash(lengthsString, 256);
+}
 
-function makeKnotHash(lengthsString, base=256){
+function makeKnotHash(lengthsString, base = 256) {
     let list = getFilledArray(base).map((el, i) => i);
 
     let additionalLengths = [17, 31, 73, 47, 23];
@@ -107,9 +67,5 @@ function makeKnotHash(lengthsString, base=256){
     return makeHash(list);
 }
 
-function tenExtended(lengthsString) {
-   return makeKnotHash(lengthsString, 256);
-}
 
 module.exports = {makeKnotHash};
->>>>>>> a42b96f94e40212cde85dfff838a02db48565e9c
